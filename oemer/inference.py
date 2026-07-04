@@ -36,11 +36,15 @@ def inference(
     use_tf: bool = False,
 ) -> Tuple[ndarray, ndarray]:
     if use_tf:
-        import tensorflow as tf
+        try:
+            from tf_keras.models import model_from_json
+        except ImportError:
+            import tensorflow as tf
+            model_from_json = tf.keras.models.model_from_json
 
         arch_path = os.path.join(model_path, "arch.json")
         w_path = os.path.join(model_path, "weights.h5")
-        model = tf.keras.models.model_from_json(open(arch_path, "r").read())
+        model = model_from_json(open(arch_path, "r").read())
         model.load_weights(w_path)
         input_shape = model.input_shape
         output_shape = model.output_shape
