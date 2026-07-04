@@ -292,11 +292,10 @@ class Measure:
                 track_duras[idx, track] = du
 
         # Decide whether to keep processing
-        if track_nums == 1:
+        if track_nums != 2:
             self.time_slots = time_slots
             self.slot_duras = track_duras
             return None
-        assert track_nums == 2, track_nums
 
         # Start adjusting rhythms
         diff = 0
